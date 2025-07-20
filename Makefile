@@ -1,6 +1,6 @@
 # Makefile for Learning Go Language project
 
-.PHONY: help build run-server run-readline clean debug-server
+.PHONY: help build run-server run-readline clean debug-server deps tidy
 
 # Default target
 help:
@@ -9,6 +9,8 @@ help:
 	@echo "  make run-server   - Run the HTTP server"
 	@echo "  make run-readline - Run the read-line program"
 	@echo "  make debug-server - Start HTTP server with debugging support"
+	@echo "  make deps         - Download and install dependencies"
+	@echo "  make tidy         - Clean up go.mod and go.sum"
 	@echo "  make clean        - Clean built binaries"
 
 # Build all programs
@@ -41,6 +43,18 @@ clean:
 	@rm -rf bin/
 	@rm -f http-server read-line
 	@echo "Clean complete!"
+
+# Download and install dependencies
+deps:
+	@echo "Downloading dependencies..."
+	@go mod download
+	@echo "Dependencies downloaded!"
+
+# Clean up go.mod and go.sum
+tidy:
+	@echo "Tidying go.mod..."
+	@go mod tidy
+	@echo "go.mod tidied!"
 
 # Create bin directory if it doesn't exist
 bin:
