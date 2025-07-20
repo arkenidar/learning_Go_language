@@ -1,6 +1,6 @@
 # Makefile for Learning Go Language project
 
-.PHONY: help build run-server run-server-gorm run-readline clean debug-server debug-server-gorm deps tidy
+.PHONY: help build run-server run-server-gorm run-readline clean debug-server debug-server-gorm debug-readline deps tidy
 
 # Default target
 help:
@@ -11,6 +11,7 @@ help:
 	@echo "  make run-readline    - Run the read-line program"
 	@echo "  make debug-server    - Start HTTP server with debugging support"
 	@echo "  make debug-server-gorm - Start GORM HTTP server with debugging support"
+	@echo "  make debug-readline  - Start read-line program with debugging support"
 	@echo "  make deps            - Download and install dependencies"
 	@echo "  make tidy            - Clean up go.mod and go.sum"
 	@echo "  make clean           - Clean built binaries"
@@ -51,6 +52,12 @@ debug-server-gorm:
 	@echo "Starting GORM HTTP server with debugging on :2345..."
 	@echo "Connect your debugger to localhost:2345"
 	@dlv debug ./cmd/http-server-gorm --headless --listen=:2345 --api-version=2 --accept-multiclient
+
+# Start read-line program with debugging support (dlv)
+debug-readline:
+	@echo "Starting read-line program with debugging on :2345..."
+	@echo "Connect your debugger to localhost:2345"
+	@dlv debug ./cmd/read-line --headless --listen=:2345 --api-version=2 --accept-multiclient
 
 # Clean built binaries
 clean:

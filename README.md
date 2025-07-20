@@ -1,53 +1,86 @@
 # Learning Go Language
 
-This repository contains multiple Go programs for learning purposes.
+This repository contains three Go programs demonstrating different aspects of Go development.
 
-## Structure
+## 🏗️ Project Structure
 
 ```
 learning_Go_language/
-├── go.mod                    # Go module file
-├── cmd/                      # Executable commands
-│   ├── http-server/
-│   │   └── main.go          # HTTP server example
-│   └── read-line/
-│       └── main.go          # Input reading example
-└── docs/                    # Documentation
+├── go.mod                         # Go module with dependencies
+├── go.sum                         # Dependency checksums
+├── Makefile                       # Build automation
+├── .gitignore                     # Git ignore rules
+├── cmd/                           # Executable commands
+│   ├── read-line/                # 📖 Input reading program
+│   │   └── main.go
+│   ├── http-server/              # 🌐 REST API (in-memory)
+│   │   └── main.go
+│   └── http-server-gorm/         # 🗄️ REST API (persistent)
+│       └── main.go
+├── bin/                          # Built executables (gitignored)
+├── .vscode/                      # VS Code configuration
+│   ├── launch.json              # Debug configurations
+│   ├── tasks.json               # Build tasks
+│   └── settings.json            # Go language settings
+└── docs/                         # Documentation
+    ├── api-testing.md           # API testing guide
     └── learn_from.md
 ```
 
-## Running the Programs
+## 🚀 Three Projects Overview
 
-### HTTP Server
+### 1. 📖 Read-Line Program (`cmd/read-line/`)
+
+- **Purpose**: Learn basic input/output and string handling
+- **Features**: Interactive console input reader
+- **Dependencies**: Standard library only
+
+### 2. 🌐 HTTP Server (`cmd/http-server/`)
+
+- **Purpose**: Learn REST API development with gorilla/mux
+- **Features**: In-memory CRUD operations, JSON API
+- **Dependencies**: `github.com/gorilla/mux`
+
+### 3. 🗄️ HTTP Server with GORM (`cmd/http-server-gorm/`)
+
+- **Purpose**: Learn database ORM and persistent storage
+- **Features**: SQLite database, auto-migration, persistent data
+- **Dependencies**: `github.com/gorilla/mux`, `gorm.io/gorm`, `gorm.io/driver/sqlite`
+
+## 🎯 Quick Start
+
+### Using Make (Recommended)
 
 ```bash
-go run ./cmd/http-server
+# Build all three programs
+make build
+
+# Run the read-line program
+make run-readline
+
+# Run the HTTP server (in-memory)
+make run-server
+
+# Run the HTTP server with database
+make run-server-gorm
+
+# Show all available commands
+make help
 ```
 
-Then visit:
-
-- http://localhost:8080 for homepage
-- http://localhost:8080/about for about page
-
-### Read Line Program
+### Manual Build and Run
 
 ```bash
-go run ./cmd/read-line
-```
-
-## Building Executables
-
-### Build all programs
-
-```bash
-# Build HTTP server
-go build -o bin/http-server ./cmd/http-server
-
-# Build read-line program
+# Build all programs
 go build -o bin/read-line ./cmd/read-line
-```
+go build -o bin/http-server ./cmd/http-server
+go build -o bin/http-server-gorm ./cmd/http-server-gorm
 
-### Build specific program
+# Run programs
+go run ./cmd/read-line                # Interactive input reader
+go run ./cmd/http-server             # REST API on :8080
+go run ./cmd/http-server-gorm        # REST API with database on :8080
+```
 
 ```bash
 # From project root
