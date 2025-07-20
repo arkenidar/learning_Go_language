@@ -1,0 +1,40 @@
+{
+    "go.lintTool": "golangci-lint",
+    "go.lintFlags": [
+        "--fast"
+    ],
+    "go.formatTool": "goimports",
+    "go.useLanguageServer": true,
+    "go.languageServerExperimentalFeatures": {
+        "diagnostics": true,
+        "documentLink": true
+    },
+    "go.toolsManagement.autoUpdate": true,
+    //"go.buildOnSave": "workspace",
+    "go.lintOnSave": "workspace",
+    "go.vetOnSave": "workspace",
+    "go.coverOnSave": false,
+    "go.buildFlags": [],
+    "go.buildTags": "",
+    "go.testFlags": [
+        "-v"
+    ],
+    "go.testTimeout": "30s",
+    "go.testOnSave": false,
+    "go.coverMode": "atomic",
+    "go.goroot": "",
+    "go.gopath": "",
+    "go.inferGopath": true,
+    "go.gocodeAutoBuild": false,
+    "go.alternateTools": {},
+    "go.toolsEnvVars": {},
+    "files.associations": {
+        "*.go": "go"
+    },
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "terminal.integrated.env.linux": {
+        "GO111MODULE": "on"
+    }
+}

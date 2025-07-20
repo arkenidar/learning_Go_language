@@ -2,12 +2,41 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Go File",
+            "name": "Debug HTTP Server",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/read-line.go",
-            "console": "externalTerminal"
+            "program": "${workspaceFolder}/cmd/http-server",
+            "console": "integratedTerminal",
+            "showLog": true
+        },
+        {
+            "name": "Debug Read-Line Program",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/cmd/read-line",
+            "console": "externalTerminal",
+            "showLog": true
+        },
+        {
+            "name": "Debug Current File",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "showLog": true
+        },
+        {
+            "name": "Attach to HTTP Server",
+            "type": "go",
+            "request": "attach",
+            "mode": "remote",
+            "remotePath": "${workspaceFolder}",
+            "port": 2345,
+            "host": "127.0.0.1",
+            "showLog": true
         }
     ]
 }

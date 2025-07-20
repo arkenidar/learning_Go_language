@@ -55,6 +55,52 @@ go build ./cmd/http-server
 go build ./cmd/read-line
 ```
 
+## VS Code Development & Debugging
+
+This project is configured for VS Code with proper debugging support.
+
+### Debugging Configurations Available
+
+1. **Debug HTTP Server** - Debug the HTTP server program
+2. **Debug Read-Line Program** - Debug the input reading program
+3. **Debug Current File** - Debug whatever Go file is currently open
+4. **Attach to HTTP Server** - Attach to a running server for debugging
+
+### How to Debug
+
+1. Open VS Code in this project folder
+2. Set breakpoints in your Go code
+3. Press `F5` or go to **Run and Debug** panel
+4. Select the appropriate debug configuration
+5. Click the green play button
+
+### Available VS Code Tasks
+
+Press `Ctrl+Shift+P` and type "Tasks: Run Task" to access:
+
+- **Build All Programs** - Builds both executables
+- **Build HTTP Server** - Builds only the HTTP server
+- **Build Read-Line Program** - Builds only the read-line program
+- **Run HTTP Server** - Runs the HTTP server
+- **Run Read-Line Program** - Runs the read-line program
+- **Clean Build Artifacts** - Removes built binaries
+- **Go: Test All** - Runs all tests
+
+### Command Line Debugging
+
+For command-line debugging with `dlv`:
+
+```bash
+# Install delve if not already installed
+go install github.com/go-delve/delve/cmd/dlv@latest
+
+# Debug HTTP server
+make debug-server
+
+# Or manually
+dlv debug ./cmd/http-server --headless --listen=:2345 --api-version=2
+```
+
 ## Why This Structure?
 
 This follows Go best practices for projects with multiple executables:
