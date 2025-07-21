@@ -1,8 +1,8 @@
-# Project Summary - Three Go Learning Programs
+# Project Summary - Four Go Learning Programs
 
 ## ✅ All Projects Successfully Configured
 
-This repository contains **three fully functional Go programs** that demonstrate progressive learning concepts:
+This repository contains **four fully functional Go programs** that demonstrate progressive learning concepts:
 
 ### 📖 1. Read-Line Program
 
@@ -43,17 +43,31 @@ This repository contains **three fully functional Go programs** that demonstrate
   - Same REST API as in-memory version
   - Runs on http://localhost:8080
 
+### 💬 4. TCP Chat Server (Raw Sockets)
+
+- **Location**: `cmd/tcp-chat-server/main.go`
+- **Purpose**: Low-level networking with raw TCP sockets
+- **Run**: `make run-tcp-chat` or `go run ./cmd/tcp-chat-server`
+- **Debug**: `make debug-tcp-chat`
+- **Features**:
+  - Raw TCP socket programming
+  - Multi-client chat server
+  - Real-time message broadcasting
+  - Nickname system and user commands
+  - Designed for netcat clients
+  - Runs on port 8888
+
 ## 🔧 Development Setup
 
 ### Build System
 
-- ✅ Comprehensive Makefile with all three projects
+- ✅ Comprehensive Makefile with all four projects
 - ✅ Individual build targets for each program
 - ✅ Clean and dependency management targets
 
 ### VS Code Integration
 
-- ✅ Debug configurations for all three programs
+- ✅ Debug configurations for all four programs
 - ✅ Go language server settings
 - ✅ Build tasks integration
 
@@ -77,7 +91,7 @@ Run the comprehensive test suite:
 ./test-all-projects.sh
 ```
 
-This verifies that all three programs:
+This verifies that all four programs:
 
 - Build successfully
 - Start without errors
@@ -88,7 +102,7 @@ This verifies that all three programs:
 ### Quick Start
 
 ```bash
-make build          # Build all three programs
+make build          # Build all four programs
 make help           # Show all available commands
 ```
 
@@ -98,6 +112,7 @@ make help           # Show all available commands
 make run-readline    # Test basic Go concepts
 make run-server      # Test REST API development
 make run-server-gorm # Test database integration
+make run-tcp-chat    # Test raw TCP socket programming
 ```
 
 ### Debugging
@@ -106,6 +121,13 @@ make run-server-gorm # Test database integration
 make debug-readline      # Debug the input reader
 make debug-server        # Debug the REST API
 make debug-server-gorm   # Debug the database version
+make debug-tcp-chat      # Debug the TCP chat server
+```
+
+### TCP Chat Demo
+
+```bash
+./demo-tcp-chat.sh       # Interactive TCP chat demo
 ```
 
 All projects are **production-ready** and follow Go best practices! 🎉

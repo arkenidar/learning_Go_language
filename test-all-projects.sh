@@ -1,8 +1,8 @@
 #!/bin/bash
-# test-all-projects.sh - Test script for all three Go projects
+# test-all-projects.sh - Test script for all four Go projects
 
-echo "🧪 Testing All Three Go Projects"
-echo "================================="
+echo "🧪 Testing All Four Go Projects"
+echo "================================"
 
 cd "$(dirname "$0")"
 
@@ -49,10 +49,23 @@ else
 fi
 
 echo ""
+echo "💬 Testing TCP chat server..."
+timeout 3s ./bin/tcp-chat-server > /dev/null 2>&1 &
+CHAT_PID=$!
+sleep 1
+if kill -0 $CHAT_PID 2>/dev/null; then
+    echo "✅ TCP chat server starts successfully"
+    kill $CHAT_PID 2>/dev/null
+else
+    echo "❌ TCP chat server failed to start"
+fi
+
+echo ""
 echo "🎉 All tests completed!"
 echo ""
 echo "🔧 Available commands:"
 echo "  make run-readline    - Run the input reader"
 echo "  make run-server      - Run HTTP server (in-memory)"  
 echo "  make run-server-gorm - Run HTTP server (with database)"
+echo "  make run-tcp-chat    - Run TCP chat server (netcat client)"
 echo "  make help            - Show all commands"

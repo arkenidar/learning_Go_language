@@ -1,6 +1,6 @@
 # Makefile for Learning Go Language project
 
-.PHONY: help build run-server run-server-gorm run-readline clean debug-server debug-server-gorm debug-readline deps tidy
+.PHONY: help build run-server run-server-gorm run-readline run-tcp-chat clean debug-server debug-server-gorm debug-readline debug-tcp-chat deps tidy
 
 # Default target
 help:
@@ -9,9 +9,11 @@ help:
 	@echo "  make run-server      - Run the HTTP server (in-memory)"
 	@echo "  make run-server-gorm - Run the HTTP server with GORM database"
 	@echo "  make run-readline    - Run the read-line program"
+	@echo "  make run-tcp-chat    - Run the TCP chat server"
 	@echo "  make debug-server    - Start HTTP server with debugging support"
 	@echo "  make debug-server-gorm - Start GORM HTTP server with debugging support"
 	@echo "  make debug-readline  - Start read-line program with debugging support"
+	@echo "  make debug-tcp-chat  - Start TCP chat server with debugging support"
 	@echo "  make deps            - Download and install dependencies"
 	@echo "  make tidy            - Clean up go.mod and go.sum"
 	@echo "  make clean           - Clean built binaries"
@@ -24,6 +26,8 @@ build:
 	@go build -o bin/http-server-gorm ./cmd/http-server-gorm
 	@echo "Building read-line program..."
 	@go build -o bin/read-line ./cmd/read-line
+	@echo "Building TCP chat server..."
+	@go build -o bin/tcp-chat-server ./cmd/tcp-chat-server
 	@echo "All programs built successfully!"
 
 # Run HTTP server
@@ -40,6 +44,12 @@ run-server-gorm:
 run-readline:
 	@echo "Starting read-line program..."
 	@go run ./cmd/read-line
+
+# Run TCP chat server
+run-tcp-chat:
+	@echo "Starting TCP chat server on :8888..."
+	@echo "Connect with: netcat localhost 8888"
+	@go run ./cmd/tcp-chat-server
 
 # Start HTTP server with debugging support (dlv)
 debug-server:
@@ -58,6 +68,12 @@ debug-readline:
 	@echo "Starting read-line program with debugging on :2345..."
 	@echo "Connect your debugger to localhost:2345"
 	@dlv debug ./cmd/read-line --headless --listen=:2345 --api-version=2 --accept-multiclient
+
+# Start TCP chat server with debugging support (dlv)
+debug-tcp-chat:
+	@echo "Starting TCP chat server with debugging on :2345..."
+	@echo "Connect your debugger to localhost:2345"
+	@dlv debug ./cmd/tcp-chat-server --headless --listen=:2345 --api-version=2 --accept-multiclient
 
 # Clean built binaries
 clean:
