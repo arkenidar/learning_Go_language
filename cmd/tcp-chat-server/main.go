@@ -32,10 +32,10 @@ func NewChatServer() *ChatServer {
 // AddClient adds a new client to the server
 func (s *ChatServer) AddClient(client *Client) {
 	s.mutex.Lock()
-	defer s.mutex.Unlock()
 	s.clients[client] = true
+	s.mutex.Unlock()
 
-	// Announce new client to all others
+	// Announce new client to all others (outside the lock to avoid deadlock)
 	message := fmt.Sprintf("*** %s joined the chat", client.nickname)
 	s.broadcastMessage(message, client)
 
@@ -92,6 +92,7 @@ func (s *ChatServer) HandleClient(conn net.Conn) {
 		return
 	}
 	nickname = strings.TrimSpace(nickname)
+	
 	if nickname == "" {
 		nickname = fmt.Sprintf("User_%d", time.Now().Unix()%1000)
 	}
@@ -111,16 +112,22 @@ func (s *ChatServer) HandleClient(conn net.Conn) {
 	writer.WriteString(fmt.Sprintf("Hello %s! You can now chat. Type messages and press Enter.\n", nickname))
 	writer.WriteString("Commands: /quit to exit, /users to see online users\n")
 	writer.WriteString("=== Chat started ===\n")
-	writer.Flush()
+	err = writer.Flush()
+	if err != nil {
+		fmt.Printf("[ERROR] Failed to send instructions to %s: %v\n", nickname, err)
+		return
+	}
 
 	// Handle incoming messages
 	for {
 		message, err := reader.ReadString('\n')
 		if err != nil {
+			fmt.Printf("[INFO] Client %s disconnected: %v\n", client.nickname, err)
 			break // Client disconnected
 		}
 
 		message = strings.TrimSpace(message)
+		
 		if message == "" {
 			continue
 		}
@@ -134,6 +141,10 @@ func (s *ChatServer) HandleClient(conn net.Conn) {
 		// Broadcast regular message
 		formattedMessage := fmt.Sprintf("[%s] %s", client.nickname, message)
 		s.broadcastMessage(formattedMessage, client)
+		
+		// Echo the message back to the sender so they can see it was processed
+		client.writer.WriteString(formattedMessage + "\n")
+		client.writer.Flush()
 
 		// Log message to server console
 		fmt.Printf("%s\n", formattedMessage)
@@ -168,7 +179,7 @@ func (s *ChatServer) handleCommand(client *Client, command string) {
 }
 
 func main() {
-	const port = ":8888"
+	const port = "127.0.0.1:8888"
 
 	// Create chat server
 	server := NewChatServer()
